@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 const Feed = () => {
   return (
     <Stack sx={{ flexDirection: { sx: "column", md: "row" } }}>
+      {/* Sidebar  */}
       <Box
         sx={{
           height: { sx: "auto", md: "92vh" },
@@ -19,6 +20,18 @@ const Feed = () => {
           sx={{ mt: 1.5, color: "#fff" }}
         >
           2022 © CutieMath
+        </Typography>
+      </Box>
+
+      {/* Feed  */}
+      <Box>
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          mb={2}
+          sx={{ color: "white" }}
+        >
+          Science <span style={{ color: "#F31503" }}>videos</span>
         </Typography>
       </Box>
     </Stack>
