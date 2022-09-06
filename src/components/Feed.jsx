@@ -5,7 +5,7 @@ import { fetchFromAPI } from "../utils/fetchFromAPI";
 
 const Feed = () => {
   // use useEffect to fetch videos from the API when component mounts
-  const [selectedCategory, setSelectedCategory] = useState("New");
+  const [selectedCategory, setSelectedCategory] = useState("Coding");
   const [videos, setVideos] = useState([]);
   useEffect(() => {
     fetchFromAPI(`search?part=snippet&q=${selectedCategory}`).then((data) => {
