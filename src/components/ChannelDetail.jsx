@@ -20,7 +20,21 @@ const ChannelDetail = () => {
     );
   }, [channelId]);
 
-  return;
+  return (
+    <Box minHeight="95vh">
+      <Box>
+        <div
+          style={{
+            background:
+              "linear-gradient(342deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 48%, rgba(224,149,231,1) 100%)",
+            zIndex: 10,
+            height: "300px",
+          }}
+        />
+        <ChannelCard channelDetail={channelDetail} />
+      </Box>
+    </Box>
+  );
 };
 
 export default ChannelDetail;
