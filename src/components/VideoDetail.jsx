@@ -3,27 +3,32 @@ import { Link, useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { Typography, Box, Stack } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
-import { Video } from "./";
+import { Videos } from "./";
 import { fetchFromAPI } from "../utils/fetchFromAPI";
 
 const VideoDetail = () => {
   const { id } = useParams();
   const [videoDetail, setVideoDetail] = useState(null);
+  const [videoList, setVideoList] = useState(null);
 
   useEffect(() => {
     fetchFromAPI(`videos?part=snippet,statistics&id=${id}`).then((data) =>
       setVideoDetail(data.items[0])
     );
+
+    fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`).then(
+      (data) => setVideoList(data.items)
+    );
   }, [id]);
 
-  if (!videoDetail) return "Loading...";
+  if (!videoDetail || !videoList) return "Loading...";
   const { snippet, statistics } = videoDetail;
   const { channelId, title, channelTitle } = snippet;
   const { viewCount, likeCount } = statistics;
-  console.log(videoDetail);
 
   return (
     <Box minHeight="95vh">
+      {/* main video */}
       <Stack direction={{ xs: "column", md: "row" }}>
         <Box flex={1}>
           <Box sx={{ width: "100%", position: "sticky", top: "86px" }}>
@@ -44,7 +49,7 @@ const VideoDetail = () => {
             >
               <Link to={`/channel/${channelId}`}>
                 <Typography
-                  variant={{ sm: "subtitle1", md: "h6" }}
+                  variant={{ sm: "subtitle2", md: "h6" }}
                   color="#fff"
                 >
                   {channelTitle}
@@ -57,12 +62,21 @@ const VideoDetail = () => {
                 <Typography variant="body2" sx={{ opacity: 0.7 }}>
                   {parseInt(viewCount).toLocaleString()} views
                 </Typography>
-                <Typography variant="body1" sx={{ opacity: 0.7 }}>
+                <Typography variant="body2" sx={{ opacity: 0.7 }}>
                   {parseInt(likeCount).toLocaleString()} likes
                 </Typography>
               </Stack>
             </Stack>
           </Box>
+        </Box>
+        {/* Video lists */}
+        <Box
+          px={2}
+          py={{ md: 1, xs: 5 }}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Videos videos={videoList} direction="column" />
         </Box>
       </Stack>
     </Box>
